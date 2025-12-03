@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# KobitoKey ファームウェア Docker ビルドスクリプト
-# 左側、右側、設定リセットの3つのファームウェアを一括ビルドします
+# KobitoKey ファームウェア Docker ビルドスクリプト（ドングルなし構成＋設定リセット）
+# 左側・右側・設定リセットの3つのファームウェアをビルドします
 
 set -e  # エラーが発生したら即座に終了
 
@@ -29,6 +29,7 @@ run_docker() {
         --user $(id -u):$(id -g) \
         -v "$PWD:$WORKSPACE" \
         -w "$WORKSPACE" \
+        -e HOME="$WORKSPACE" \
         "$IMAGE" \
         "$@"
 }
@@ -38,34 +39,16 @@ build_target() {
     local target_name=$1
     local build_dir=$2
     local shield=$3
-    local cmake_args=$4
-    local snippet=$5
 
     echo -e "${BLUE}========================================${NC}"
     echo -e "${BLUE}ビルド中: ${target_name}${NC}"
     echo -e "${BLUE}========================================${NC}"
 
-    # west buildコマンドの構築
-    # snippetは -S オプションとして -- の前に配置する必要がある
-    local build_cmd=(west build -s zmk/app -p -d "$build_dir" -b seeeduino_xiao_ble)
-
-    # snippetがある場合は --の前に追加
-    if [ -n "$snippet" ]; then
-        build_cmd+=(-S "$snippet")
-    fi
-
-    # -- 以降にCMake引数を追加
-    build_cmd+=(--)
-    build_cmd+=(-DZMK_CONFIG="$WORKSPACE/config")
-    build_cmd+=(-DZephyr_DIR="$WORKSPACE/zephyr/share/zephyr-package/cmake")
-    build_cmd+=(-DSHIELD="$shield")
-
-    # 追加のCMake引数
-    if [ -n "$cmake_args" ]; then
-        build_cmd+=("$cmake_args")
-    fi
-
-    run_docker "${build_cmd[@]}"
+    # west buildコマンド
+    run_docker west build -s zmk/app -p -d "$build_dir" -b seeeduino_xiao_ble -- \
+        -DZMK_CONFIG="$WORKSPACE/config" \
+        -DZephyr_DIR="$WORKSPACE/zephyr/share/zephyr-package/cmake" \
+        -DSHIELD="$shield"
 
     echo -e "${GREEN}✓ ${target_name} のビルドが完了しました${NC}"
     echo ""
@@ -73,8 +56,21 @@ build_target() {
 
 # メイン処理
 main() {
-    echo -e "${GREEN}KobitoKey ファームウェアのビルドを開始します...${NC}"
+    echo -e "${GREEN}KobitoKey ファームウェアのビルド（ドングルなし構成＋設定リセット）を開始します...${NC}"
     echo ""
+
+    # 最初の段階で対話プロンプト（デフォルトは N = ビルドする）
+    echo -n "設定リセットのビルドはスキップしますか? [y/N]: "
+    read -r skip_reset_input
+    # 未入力は N とみなし、入力を大文字に正規化
+    if [ -z "$skip_reset_input" ]; then
+        skip_reset_decision="N"
+    else
+        skip_reset_decision=$(echo "$skip_reset_input" | tr '[:lower:]' '[:upper:]')
+    fi
+
+    # 総ビルド時間の計測開始
+    start_time=$(date +%s)
 
     # Docker イメージの確認
     echo -e "${YELLOW}Docker イメージを確認中...${NC}"
@@ -88,16 +84,8 @@ main() {
 
     # Zephyr のエクスポート
     echo -e "${YELLOW}Zephyr をエクスポート中...${NC}"
-    run_docker west zephyr-export
+    run_docker bash -lc 'mkdir -p "$HOME/.cmake/packages" && west zephyr-export'
     echo -e "${GREEN}✓ Zephyr のエクスポートが完了しました${NC}"
-    echo ""
-
-    # ビルド開始時刻
-    start_time=$(date +%s)
-
-    echo -e "${BLUE}========================================${NC}"
-    echo -e "${BLUE}ドングルなし構成のビルド${NC}"
-    echo -e "${BLUE}========================================${NC}"
     echo ""
 
     # 左側のビルド（ドングルなし）
@@ -110,50 +98,23 @@ main() {
         "build/right_dongleless" \
         "KobitoKey_right rgbled_adapter"
 
-    echo -e "${BLUE}========================================${NC}"
-    echo -e "${BLUE}ドングルあり構成のビルド${NC}"
-    echo -e "${BLUE}========================================${NC}"
-    echo ""
+    # 設定リセットのビルド可否判定（最初の入力に基づく）
+    if [ "$skip_reset_decision" = "N" ]; then
+        # 設定リセットのビルド（N の場合のみ実行）
+        build_target "設定リセット" \
+            "build/settings_reset" \
+            "settings_reset"
+    else
+        echo -e "${YELLOW}設定リセットのビルドはスキップされました${NC}"
+    fi
 
-    # ドングルのビルド（XIAO BLE版）
-    build_target "ドングル（XIAO BLE版）" \
-        "build/dongle" \
-        "KobitoKey_dongle_xiao" \
-        "-DCONFIG_ZMK_STUDIO=y" \
-        "studio-rpc-usb-uart"
-
-    # ドングルのビルド（Prospector版）
-    build_target "ドングル（Prospector版）" \
-        "build/dongle_prospector" \
-        "KobitoKey_dongle_xiao prospector_adapter" \
-        "-DCONFIG_ZMK_STUDIO=y" \
-        "studio-rpc-usb-uart"
-
-    # 左側ペリフェラルのビルド
-    build_target "左側ペリフェラル" \
-        "build/left_peripheral" \
-        "KobitoKey_left_peripheral rgbled_adapter"
-
-    # 右側ペリフェラルのビルド
-    build_target "右側ペリフェラル" \
-        "build/right_peripheral" \
-        "KobitoKey_right_peripheral rgbled_adapter"
-
-    echo -e "${BLUE}========================================${NC}"
-    echo -e "${BLUE}共通ファームウェアのビルド${NC}"
-    echo -e "${BLUE}========================================${NC}"
-    echo ""
-
-    # 設定リセットのビルド
-    build_target "設定リセット" "build/settings_reset" "settings_reset"
-
-    # ビルド終了時刻
+    # 計測終了
     end_time=$(date +%s)
     elapsed=$((end_time - start_time))
 
     # 完了メッセージ
     echo -e "${GREEN}========================================${NC}"
-    echo -e "${GREEN}すべてのビルドが完了しました！${NC}"
+    echo -e "${GREEN}ビルドが完了しました！${NC}"
     echo -e "${GREEN}========================================${NC}"
     echo ""
     echo -e "${BLUE}ビルド時間: ${elapsed}秒${NC}"
@@ -164,20 +125,8 @@ main() {
     echo -e "  左側:           ${GREEN}build/left_dongleless/zephyr/zmk.uf2${NC}"
     echo -e "  右側:           ${GREEN}build/right_dongleless/zephyr/zmk.uf2${NC}"
     echo ""
-    echo -e "${BLUE}【ドングルあり構成】${NC}"
-    echo -e "  ドングル（XIAO BLE版）:  ${GREEN}build/dongle/zephyr/zmk.uf2${NC}"
-    echo -e "  ドングル（Prospector版）: ${GREEN}build/dongle_prospector/zephyr/zmk.uf2${NC}"
-    echo -e "  左ペリフェラル:          ${GREEN}build/left_peripheral/zephyr/zmk.uf2${NC}"
-    echo -e "  右ペリフェラル:          ${GREEN}build/right_peripheral/zephyr/zmk.uf2${NC}"
-    echo ""
     echo -e "${BLUE}【共通】${NC}"
     echo -e "  設定リセット:   ${GREEN}build/settings_reset/zephyr/zmk.uf2${NC}"
-    echo ""
-    echo -e "${YELLOW}次のステップ:${NC}"
-    echo -e "  1. 使用する構成を選択（ドングルあり/なし）"
-    echo -e "  2. キーボードをブートローダーモードで接続"
-    echo -e "  3. 対応する .uf2 ファイルをキーボードにコピー"
-    echo -e "  4. 詳細は DONGLE_IMPLEMENTATION_PLAN.md を参照"
     echo ""
 }
 
