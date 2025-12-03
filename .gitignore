@@ -86,3 +86,10 @@ node_modules/
 .pytest_cache/
 .mypy_cache/
 .tox/
+.cmake/
+build/
+.west/
+zephyr/
+zmk/
+modules/
+prospector-zmk-module/

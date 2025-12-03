@@ -29,8 +29,53 @@ run_docker() {
         --user $(id -u):$(id -g) \
         -v "$PWD:$WORKSPACE" \
         -w "$WORKSPACE" \
+        -e HOME="$WORKSPACE" \
+        -e ZEPHYR_BASE="$WORKSPACE/zephyr" \
         "$IMAGE" \
         "$@"
+}
+
+# 依存モジュール更新（詳細ログ＋失敗時診断付き）
+update_modules() {
+    echo -e "${BLUE}[3/4] 依存モジュールを更新中...${NC}"
+    echo -e "${YELLOW}この処理には数分かかる場合があります${NC}"
+
+    # west の詳細ログを有効化して試行
+    echo -e "${YELLOW}west の詳細ログを有効化して更新しています...${NC}"
+    set +e
+    run_docker env WEST_LOGGER_LEVEL=DEBUG west -v update
+    local status=$?
+    set -e
+
+    if [ $status -ne 0 ]; then
+        echo -e "${RED}west update が失敗しました。詳細診断を開始します...${NC}"
+
+        echo -e "${YELLOW}west のキャッシュ情報と設定を表示します${NC}"
+        set +e
+        run_docker west config --list
+        run_docker west list
+        run_docker west manifest --path
+        # tinycrypt は Zephyr の project imports で解決されるため配置は modules/crypto/tinycrypt
+        run_docker git --no-pager -C modules/crypto/tinycrypt status || true
+        run_docker git --no-pager -C modules/crypto/tinycrypt remote -v || true
+        run_docker git --no-pager -C modules/crypto/tinycrypt rev-parse HEAD || true
+        set -e
+
+        echo -e "${YELLOW}tinycrypt ディレクトリを初期化して、plain 'west update' で再取得を試みます${NC}"
+        set +e
+        run_docker rm -rf modules/crypto/tinycrypt
+        # 個別更新は project imports では拒否されるため、必ず plain update を使用
+        run_docker env WEST_LOGGER_LEVEL=DEBUG west -v update
+        local re_status=$?
+        set -e
+
+        if [ $re_status -ne 0 ]; then
+            echo -e "${RED}再試行の west update も失敗しました。ログを確認して対応してください。${NC}"
+            return 1
+        fi
+    fi
+
+    echo -e "${GREEN}✓ 依存モジュールの更新が完了しました${NC}"
 }
 
 # メイン処理
@@ -61,16 +106,35 @@ main() {
     fi
     echo ""
 
-    # ステップ 3: 依存モジュールの更新
-    echo -e "${BLUE}[3/4] 依存モジュールを更新中...${NC}"
-    echo -e "${YELLOW}この処理には数分かかる場合があります${NC}"
-    run_docker west update
-    echo -e "${GREEN}✓ 依存モジュールの更新が完了しました${NC}"
+    # ステップ 3: 依存モジュールの更新（詳細ログ＆診断付）
+    update_modules || error_handler_for_update
     echo ""
 
     # ステップ 4: Zephyr のエクスポート
     echo -e "${BLUE}[4/4] Zephyr をエクスポート中...${NC}"
-    run_docker west zephyr-export
+    set +e
+    # HOME と ZEPHYR_BASE を明示して実行（コンテナ内でも再確認）
+    run_docker env HOME="$WORKSPACE" ZEPHYR_BASE="$WORKSPACE/zephyr" WEST_LOGGER_LEVEL=DEBUG west zephyr-export
+    ZE_STATUS=$?
+    set -e
+
+    if [ ${ZE_STATUS} -ne 0 ]; then
+        echo -e "${RED}west zephyr-export が失敗しました。追加診断を実施します...${NC}"
+        echo -e "${YELLOW}ZEPHYR_BASE とエクスポート CMake スクリプトの存在を確認します${NC}"
+        run_docker sh -lc 'echo "HOME=$HOME"; echo "ZEPHYR_BASE=$ZEPHYR_BASE"; ls -la /workspace/zephyr/share/zephyr-package/cmake/ || true; ls -la ~/.cmake/packages || true'
+
+        echo -e "${YELLOW}CMake スクリプトを直接トレース付きで実行して詳細を表示します${NC}"
+        set +e
+        run_docker cmake -Wdev --trace-expand -P /workspace/zephyr/share/zephyr-package/cmake/zephyr_export.cmake
+        CM_STATUS=$?
+        set -e
+
+        if [ ${CM_STATUS} -ne 0 ]; then
+            echo -e "${RED}CMake 直接実行でも失敗しました。出力ログを参照してください。${NC}"
+            error_handler_for_update
+        fi
+    fi
+
     echo -e "${GREEN}✓ Zephyr のエクスポートが完了しました${NC}"
     echo ""
 
@@ -88,7 +152,7 @@ main() {
     echo ""
 }
 
-# エラーハンドラー
+# エラーハンドラー（一般）
 error_handler() {
     echo -e "${RED}========================================${NC}"
     echo -e "${RED}エラーが発生しました${NC}"
@@ -105,6 +169,19 @@ error_handler() {
     echo ""
     echo -e "  4. 詳細は DOCKER_BUILD_SETUP.md を参照してください"
     echo ""
+    exit 1
+}
+
+# west update 専用のエラーハンドラー（詳細ログ後に終了）
+error_handler_for_update() {
+    echo -e "${RED}========================================${NC}"
+    echo -e "${RED}依存モジュールの更新に失敗しました${NC}"
+    echo -e "${RED}========================================${NC}"
+    echo ""
+    echo -e "${YELLOW}追加の対処:${NC}"
+    echo -e "  - 必要なら ${BLUE}rm -rf modules/crypto/tinycrypt${NC} の後に再実行"
+    echo -e "  - ネットワークや GitHub へのアクセス状況を確認"
+    echo -e "  - west の manifest や config の整合性確認"
     exit 1
 }
 
