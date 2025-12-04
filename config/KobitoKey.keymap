@@ -39,40 +39,40 @@
         default_layer {
             label = "Kobito";
             bindings = <
-&kp Q      &kp W     &kp E     &kp R        &kp T      &kp Y     &kp U        &kp I      &kp O      &kp P
-&kp A      &kp S     &kp D     &kp F        &kp G      &kp H     &kp J        &kp K      &kp L      &kp SEMI
-&kp Z      &kp X     &kp C     &kp V        &kp B      &kp N     &kp M        &kp COMMA  &kp DOT    &kp APOS
-&kp LSHFT  &kp LALT  &kp LCMD  &lt 2 SPACE  &kp LCTRL  &kp BSPC  &lt 1 ENTER  &kp RSHFT  &kp RSHFT  &mt LALT SLASH
+&kp Q               &kp W     &kp E                  &kp R      &kp T        &kp Y        &kp U          &kp I                   &kp O          &kp P
+&mt LEFT_CONTROL A  &kp S     &kp D                  &kp F      &kp G        &kp H        &kp J          &kp K                   &kp L          &kp SEMI
+&mt LEFT_SHIFT Z    &kp X     &kp C                  &kp V      &kp B        &kp N        &kp M          &kp COMMA               &kp DOT        &mt RIGHT_SHIFT SLASH
+&kp GRAVE           &kp LALT  &mt LCMD LEFT_BRACKET  &kp SPACE  &lt 2 MINUS  &lt 1 ENTER  &kp BACKSPACE  &mt RCMD RIGHT_BRACKET  &kp RIGHT_ALT  &mt RIGHT_SHIFT MINUS
             >;
         };
 
         layer1 {
             label = "NUMBER";
             bindings = <
-&kp N0     &kp N1  &kp N2  &kp N3     &kp GRAVE  &kp MINUS  &trans     &kp UP    &kp BSLH   &kp PIPE
-&kp EQUAL  &kp N4  &kp N5  &kp N6     &trans     &kp PLUS   &kp LEFT   &kp DOWN  &kp RIGHT  &trans
-&kp LBRC   &kp N7  &kp N8  &kp N9     &kp RBRC   &kp ASTRK  &kp SLASH  &kp LBKT  &kp RBKT   &trans
-&trans     &trans  &trans  &kp LSHFT  &trans     &kp HASH   &kp POUND  &trans    &trans     &trans
+&kp NUMBER_1    &kp NUMBER_2  &kp NUMBER_3  &kp NUMBER_4  &kp NUMBER_5      &kp NUMBER_6              &kp NUMBER_7    &kp NUMBER_8  &kp NUMBER_9               &kp NUMBER_0
+&kp LEFT_SHIFT  &kp SLASH     &kp MINUS     &kp PLUS      &kp ASTRK         &kp LEFT                  &kp DOWN_ARROW  &kp UP_ARROW  &kp RIGHT                  &kp EQUAL
+&trans          &trans        &trans        &kp LA(LCMD)  &kp LA(LC(LCMD))  &kp LS(LG(LEFT_BRACKET))  &kp PAGE_DOWN   &kp PAGE_UP   &kp RS(RG(RIGHT_BRACKET))  &trans
+&trans          &trans        &trans        &trans        &trans            &trans                    &trans          &trans        &trans                     &trans
             >;
         };
 
         layer2 {
             label = "FUNCTION";
             bindings = <
-&bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3    &bt BT_SEL 4    &kp F1   &kp F2   &kp F3  &kp F4  &kp F5
-&trans        &trans        &trans        &studio_unlock  &bt BT_CLR      &kp F6   &kp F7   &kp F8  &kp F9  &kp F10
-&trans        &trans        &trans        &trans          &bt BT_CLR_ALL  &kp F11  &kp F12  &trans  &trans  &trans
-&trans        &trans        &trans        &trans          &trans          &kp DEL  &trans   &trans  &trans  &trans
+&kp EXCLAMATION  &kp AT  &kp POUND  &kp DOLLAR  &kp PERCENT  &kp CARET  &kp AMPERSAND  &kp ASTRK      &kp LEFT_PARENTHESIS  &kp RIGHT_PARENTHESIS
+&trans           &trans  &trans     &trans      &trans       &kp F11    &kp F12        &trans         &trans                &trans
+&kp F1           &kp F2  &kp F3     &kp F4      &kp F5       &kp F6     &kp F7         &kp F8         &kp F9                &kp F10
+&trans           &trans  &trans     &trans      &trans       &trans     &kp RCMD       &kp RIGHT_ALT  &trans                &kp LEFT_SHIFT
             >;
         };
 
         layer3 {
             label = "MOUSE";
             bindings = <
-&trans     &trans  &trans    &trans    &trans  &trans  &mkp MB1  &mkp MB3  &mkp MB2  &trans
-&trans     &trans  &trans    &trans    &trans  &trans  &trans    &trans    &trans    &trans
-&trans     &trans  &trans    &trans    &trans  &trans  &trans    &trans    &trans    &trans
-&kp LSHFT  &trans  &kp LCMD  &kp LALT  &to 0   &trans  &trans    &trans    &to 0     &kp RALT
+&trans  &trans  &trans  &trans  &trans  &trans  &mkp MB1  &mkp MB3  &mkp MB2  &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans    &trans    &trans    &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans    &trans    &trans    &trans
+&trans  &trans  &trans  &trans  &to 0   &to 0   &trans    &trans    &trans    &trans
             >;
         };
     };
