@@ -70,10 +70,10 @@
         layer2 {
             label = "FUNCTION";
             bindings = <
-&kp EXCLAMATION      &kp AT  &kp POUND  &kp DOLLAR  &kp PERCENT  &kp CARET  &kp AMPERSAND  &kp ASTRK          &kp LEFT_PARENTHESIS  &kp RIGHT_PARENTHESIS
-&mt LEFT_CONTROL F1  &kp F2  &kp F3     &kp F4      &kp F5       &kp F6     &kp F7         &kp F8             &kp F9                &kp F10
-&trans               &trans  &trans     &trans      &trans       &kp F11    &kp F12        &trans             &trans                &kp RIGHT_SHIFT
-&trans               &trans  &trans     &trans      &trans       &kp RCMD   &kp DELETE     &kp RIGHT_CONTROL  &kp RIGHT_ALT         &trans
+&kp EXCLAMATION      &kp AT  &kp POUND  &kp DOLLAR  &kp PERCENT  &kp CARET      &kp AMPERSAND  &kp ASTRK  &kp LEFT_PARENTHESIS  &kp RIGHT_PARENTHESIS
+&mt LEFT_CONTROL F1  &kp F2  &kp F3     &kp F4      &kp F5       &kp F6         &kp F7         &kp F8     &kp F9                &kp F10
+&trans               &trans  &trans     &trans      &trans       &kp F11        &kp F12        &trans     &trans                &kp RIGHT_SHIFT
+&trans               &trans  &trans     &trans      &trans       &kp RG(SPACE)  &kp DELETE     &kp RCMD   &kp RIGHT_ALT         &trans
             >;
         };
 
