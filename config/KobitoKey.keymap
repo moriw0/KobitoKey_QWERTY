@@ -70,10 +70,10 @@
         layer2 {
             label = "SIMBLE";
             bindings = <
-&kp EXCLAMATION  &kp AT  &kp POUND  &kp DOLLAR  &kp PERCENT   &kp CARET       &kp AMPERSAND      &kp ASTRK       &kp LEFT_PARENTHESIS  &kp RIGHT_PARENTHESIS
-&trans           &kp GRAVE &kp TILDE &kp BACKSLASH   &kp PIPE &kp APOSTROPHE  &kp DOUBLE_QUOTES  &kp LEFT_BRACE  &kp RIGHT_BRACE       &trans
-&trans           &trans  &trans     &trans      &trans      &trans           &trans  &trans     &trans      &trans
-&trans           &trans  &trans     &trans      &trans         &kp RG(SPACE)   &kp DELETE         &kp RCMD        &kp RIGHT_ALT         &trans
+&kp EXCLAMATION  &kp AT     &kp POUND  &kp DOLLAR     &kp PERCENT  &kp CARET       &kp AMPERSAND      &kp ASTRK       &kp LEFT_PARENTHESIS  &kp RIGHT_PARENTHESIS
+&trans           &kp GRAVE  &kp TILDE  &kp BACKSLASH  &kp PIPE     &kp APOSTROPHE  &kp DOUBLE_QUOTES  &kp LEFT_BRACE  &kp RIGHT_BRACE       &trans
+&trans           &trans     &trans     &trans         &trans       &kp EQUAL       &kp PLUS           &trans          &trans                &trans
+&trans           &trans     &trans     &trans         &trans       &kp RG(SPACE)   &kp DELETE         &kp RCMD        &kp RIGHT_ALT         &trans
             >;
         };
 
@@ -90,10 +90,10 @@
         layer4 {
             label = "FUNCTION";
             bindings = <
-&trans               &trans         &trans    &trans  &trans  &trans   &trans   &trans  &trans  &trans
-&mt LEFT_CONTROL F1  &kp F2         &kp F3    &kp F4  &kp F5  &kp F6   &kp F7   &kp F8  &kp F9  &kp F10
-&trans               &trans         &trans    &trans  &trans  &kp F11  &kp F12  &trans  &trans  &kp RIGHT_SHIFT
-&trans               &kp RIGHT_ALT  &kp RCMD  &trans  &trans  &trans   &trans   &trans  &kp RIGHT_ALT &trans
+&trans               &trans         &trans    &trans  &trans  &trans   &trans   &trans  &trans         &trans
+&mt LEFT_CONTROL F1  &kp F2         &kp F3    &kp F4  &kp F5  &kp F6   &kp F7   &kp F8  &kp F9         &kp F10
+&trans               &trans         &trans    &trans  &trans  &kp F11  &kp F12  &trans  &trans         &kp RIGHT_SHIFT
+&trans               &kp RIGHT_ALT  &kp RCMD  &trans  &trans  &trans   &trans   &trans  &kp RIGHT_ALT  &trans
             >;
         };
     };
