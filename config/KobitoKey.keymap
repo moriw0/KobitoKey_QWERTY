@@ -4,7 +4,7 @@
 #include <dt-bindings/zmk/pointing.h>
 
 / {
-     behaviors {
+    behaviors {
         esc_lang2: behavior_macro {
             compatible = "zmk,behavior-macro";
             label = "ESC_LANG2";
@@ -41,26 +41,29 @@
         };
     };
 
+    macros {
+    };
+
     keymap {
         compatible = "zmk,keymap";
 
         default_layer {
             label = "Kobito";
             bindings = <
-&kp Q               &kp W     &kp E                  &kp R      &kp T        &kp Y        &kp U          &kp I                   &kp O          &kp P
-&mt LEFT_CONTROL A  &kp S     &kp D                  &kp F      &kp G        &kp H        &kp J          &kp K                   &kp L          &kp SEMI
-&mt LEFT_SHIFT Z    &kp X     &kp C                  &kp V      &kp B        &kp N        &kp M          &kp COMMA               &kp DOT        &mt RIGHT_SHIFT SLASH
-&kp GRAVE           &kp LALT  &mt LCMD LEFT_BRACKET  &kp SPACE  &lt 2 MINUS  &lt 1 ENTER  &kp BACKSPACE  &mt RCMD RIGHT_BRACKET  &kp RIGHT_ALT  &mt RIGHT_SHIFT MINUS
+&kp Q                 &kp W     &kp E                  &kp R                   &kp T        &kp Y        &kp U          &kp I                   &kp O          &kp P
+&kp A                 &kp S     &kp D                  &kp F                   &kp G        &kp H        &kp J          &kp K                   &kp L          &kp SEMI
+&kp Z                 &kp X     &kp C                  &kp V                   &kp B        &kp N        &kp M          &kp COMMA               &kp DOT        &kp SLASH
+&mt LEFT_SHIFT GRAVE  &kp LALT  &mt LCMD LEFT_BRACKET  &mt LEFT_CONTROL SPACE  &lt 2 MINUS  &lt 1 ENTER  &kp BACKSPACE  &mt RCMD RIGHT_BRACKET  &kp RIGHT_ALT  &mt RIGHT_SHIFT MINUS
             >;
         };
 
         layer1 {
             label = "NUMBER";
             bindings = <
-&kp NUMBER_1     &kp NUMBER_2  &kp NUMBER_3  &kp NUMBER_4  &kp NUMBER_5      &kp NUMBER_6     &kp NUMBER_7    &kp NUMBER_8  &kp NUMBER_9      &kp NUMBER_0
-&kp LEFT_CONTROL &kp SLASH     &kp MINUS     &kp PLUS      &kp ASTRK         &kp LEFT         &kp DOWN_ARROW  &kp UP_ARROW  &kp RIGHT         &kp EQUAL
-&kp LEFT_SHIFT   &trans        &trans        &kp LA(LCMD)  &kp LA(LC(LCMD))  &kp LEFT_BRACKET &kp PAGE_DOWN   &kp PAGE_UP   &kp RIGHT_BRACKET &trans
-&trans           &kp LALT      &kp LCMD      &trans        &trans            &trans           &trans          &trans        &trans            &trans
+&kp NUMBER_1      &kp NUMBER_2  &kp NUMBER_3  &kp NUMBER_4  &kp NUMBER_5      &kp NUMBER_6      &kp NUMBER_7    &kp NUMBER_8  &kp NUMBER_9       &kp NUMBER_0
+&kp LEFT_CONTROL  &kp SLASH     &kp MINUS     &kp PLUS      &kp ASTRK         &kp LEFT          &kp DOWN_ARROW  &kp UP_ARROW  &kp RIGHT          &kp EQUAL
+&kp LEFT_SHIFT    &trans        &trans        &kp LA(LCMD)  &kp LA(LC(LCMD))  &kp LEFT_BRACKET  &kp PAGE_DOWN   &kp PAGE_UP   &kp RIGHT_BRACKET  &trans
+&trans            &kp LALT      &kp LCMD      &trans        &trans            &trans            &trans          &trans        &trans             &trans
             >;
         };
 
@@ -69,7 +72,7 @@
             bindings = <
 &kp EXCLAMATION      &kp AT  &kp POUND  &kp DOLLAR  &kp PERCENT  &kp CARET  &kp AMPERSAND  &kp ASTRK          &kp LEFT_PARENTHESIS  &kp RIGHT_PARENTHESIS
 &mt LEFT_CONTROL F1  &kp F2  &kp F3     &kp F4      &kp F5       &kp F6     &kp F7         &kp F8             &kp F9                &kp F10
-&trans               &trans  &trans     &trans      &trans       &kp F11    &kp F12        &kp RS(RCMD)       &kp RS(RC(RCMD))      &kp RIGHT_SHIFT
+&trans               &trans  &trans     &trans      &trans       &kp F11    &kp F12        &trans             &trans                &kp RIGHT_SHIFT
 &trans               &trans  &trans     &trans      &trans       &kp RCMD   &kp DELETE     &kp RIGHT_CONTROL  &kp RIGHT_ALT         &trans
             >;
         };
