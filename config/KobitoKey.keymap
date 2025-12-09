@@ -73,7 +73,7 @@
 &kp EXCLAMATION  &kp AT    &kp POUND  &kp DOLLAR  &kp PERCENT  &kp CARET       &kp AMPERSAND  &kp ASTRK          &kp LEFT_PARENTHESIS  &kp RIGHT_PARENTHESIS
 &kp BACKSLASH    &kp PIPE  &kp PLUS   &kp GRAVE   &kp TILDE    &kp APOSTROPHE  &kp EQUAL      &kp DOUBLE_QUOTES  &kp LEFT_BRACE        &kp RIGHT_BRACE
 &trans           &trans    &trans     &trans      &trans       &trans          &trans         &trans             &trans                &trans
-&trans           &trans    &trans     &trans      &trans       &trans          &trans         &kp RG(SPACE)      &kp DELETE            &kp RCMD
+&trans           &trans    &trans     &trans      &trans       &kp RG(SPACE)   &kp DELETE     &kp RCMD           &trans                &trans
             >;
         };
 
