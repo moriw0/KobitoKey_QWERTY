@@ -1,12 +1,19 @@
+#include <input/processors.dtsi>
 #include <behaviors.dtsi>
-#include <dt-bindings/zmk/bt.h>
 #include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/pointing.h>
-#include <input/processors.dtsi>
 
+/ {
+    behaviors {
+        esc_lang2: behavior_macro {
+            compatible = "zmk,behavior-macro";
+            label = "ESC_LANG2";
+            #binding-cells = <0>;
+            bindings = <&kp ESC &kp LANG2>;
+        };
+    };
 
- / { 
-        combos {
+    combos {
         compatible = "zmk,combos";
 
         combo_eisu {
@@ -20,63 +27,74 @@
             key-positions = <16 17>;
             bindings = <&kp LANG1>;
         };
-        
-         combo_esc {
+
+        combo_esc {
             timeout-ms = <50>;
             key-positions = <0 1>;
-            bindings = <&kp ESC>;
+            bindings = <&esc_lang2>;
         };
 
-         combo_tab {
+        combo_tab {
             timeout-ms = <50>;
             key-positions = <10 11>;
             bindings = <&kp TAB>;
-        };        
+        };
     };
 
+    macros {
+    };
 
-        keymap {
+    keymap {
         compatible = "zmk,keymap";
 
         default_layer {
             label = "Kobito";
             bindings = <
-                &kp Q       &kp W      &kp E      &kp R           &kp T                    &kp Y            &kp U           &kp I        &kp O      &kp P
-                &kp A       &kp S      &kp D      &kp F           &kp G                    &kp H            &kp J           &kp K        &kp L      &kp SEMI
-                &kp Z       &kp X      &kp C      &kp V           &kp B                    &kp N            &kp M           &kp COMMA    &kp DOT    &kp APOS
-                &kp LSHFT   &kp LALT   &kp LCMD   &lt 2 SPACE     &kp LCTRL                &kp BSPC         &lt 1 ENTER     &kp RSHFT    &kp RSHFT  &mt LALT SLASH
+&kp Q           &kp W     &kp E     &kp R                   &kp T        &kp Y        &kp U          &kp I            &kp O             &kp P
+&kp A           &kp S     &kp D     &kp F                   &kp G        &kp H        &kp J          &kp K            &kp L             &kp SEMICOLON
+&kp Z           &kp X     &kp C     &kp V                   &kp B        &kp N        &kp M          &kp COMMA        &kp DOT           &kp SLASH
+&kp LEFT_SHIFT  &kp LALT  &kp LCMD  &mt LEFT_CONTROL SPACE  &lt 2 MINUS  &lt 1 ENTER  &kp BACKSPACE  &kp RIGHT_SHIFT  &kp LEFT_BRACKET  &lt 4 RIGHT_BRACKET
             >;
         };
 
         layer1 {
-            label = "NUMBER";
+            label = "NUM&MOVE";
             bindings = <
-                &kp N0    &kp N1   &kp N2   &kp N3      &kp GRAVE       &kp MINUS   &trans       &kp UP         &kp BSLH     &kp PIPE
-                &kp EQUAL &kp N4   &kp N5   &kp N6      &trans          &kp PLUS    &kp LEFT     &kp DOWN       &kp RIGHT    &trans
-                &kp LBRC  &kp N7   &kp N8   &kp N9      &kp RBRC        &kp ASTRK   &kp SLASH    &kp LBKT       &kp RBKT     &trans
-                &trans    &trans   &trans   &kp LSHFT   &trans          &trans      &trans       &trans         &trans       &trans
+&kp NUMBER_1    &kp NUMBER_2  &kp NUMBER_3  &kp NUMBER_4  &kp NUMBER_5      &kp NUMBER_6  &kp NUMBER_7    &kp NUMBER_8  &kp NUMBER_9  &kp NUMBER_0
+&trans          &trans        &trans        &kp LA(LCMD)  &kp LA(LC(LCMD))  &kp LEFT      &kp DOWN_ARROW  &kp UP_ARROW  &kp RIGHT     &trans
+&kp LEFT_SHIFT  &trans        &trans        &trans        &trans            &kp HOME      &kp PAGE_DOWN   &kp PAGE_UP   &kp END       &trans
+&trans          &kp LALT      &kp LCMD      &kp LS(LCMD)  &kp LC(LS(LCMD))  &trans        &trans          &trans        &trans        &trans
             >;
         };
 
         layer2 {
-            label = "FUNCTION";
+            label = "SIMBLE";
             bindings = <
-                &bt BT_SEL 0   &bt BT_SEL 1   &bt BT_SEL 2   &bt BT_SEL 3   &bt BT_SEL 4          &kp F1        &kp F2       &kp F3      &kp F4     &kp F5
-                &trans         &trans         &trans         &studio_unlock &bt BT_CLR            &kp F6        &kp F7       &kp F8      &kp F9     &kp F10
-                &trans         &trans         &trans         &trans         &bt BT_CLR_ALL        &kp F11       &kp F12      &trans      &trans     &trans
-                &trans         &trans         &trans         &trans         &trans                &kp DEL       &trans       &trans      &trans     &trans
+&kp EXCLAMATION  &kp AT    &kp POUND  &kp DOLLAR  &kp PERCENT  &kp CARET       &kp AMPERSAND  &kp ASTRK          &kp LEFT_PARENTHESIS  &kp RIGHT_PARENTHESIS
+&kp BACKSLASH    &kp PIPE  &kp PLUS   &kp GRAVE   &kp TILDE    &kp APOSTROPHE  &kp EQUAL      &kp DOUBLE_QUOTES  &kp LEFT_BRACE        &kp RIGHT_BRACE
+&trans           &trans    &trans     &trans      &trans       &trans          &trans         &trans             &trans                &trans
+&trans           &trans    &trans     &trans      &trans       &kp RG(SPACE)   &kp DELETE     &kp RCMD           &trans                &trans
             >;
         };
 
         layer3 {
             label = "MOUSE";
             bindings = <
-                &trans      &trans   &trans     &trans      &trans           &trans   &mkp MB1   &mkp MB3   &mkp MB2  &trans
-                &trans      &trans   &trans     &trans      &trans           &trans   &trans     &trans     &trans    &trans
-                &trans      &trans   &trans     &trans      &trans           &trans   &trans     &trans     &trans    &trans
-                &kp LSHFT   &trans   &kp LCMD   &kp LALT    &to 0            &trans   &trans     &trans     &to 0     &kp RALT
+&trans  &trans  &trans  &trans  &trans  &trans  &mkp MB1  &mkp MB3  &mkp MB2  &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans    &trans    &trans    &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans    &trans    &trans    &trans
+&trans  &trans  &trans  &trans  &to 0   &to 0   &trans    &trans    &trans    &trans
+            >;
+        };
+
+        layer4 {
+            label = "FUNCTION";
+            bindings = <
+&trans               &trans         &trans    &trans  &trans  &trans   &trans   &trans  &trans         &trans
+&mt LEFT_CONTROL F1  &kp F2         &kp F3    &kp F4  &kp F5  &kp F6   &kp F7   &kp F8  &kp F9         &kp F10
+&trans               &trans         &trans    &trans  &trans  &kp F11  &kp F12  &trans  &trans         &kp RIGHT_SHIFT
+&trans               &kp RIGHT_ALT  &kp RCMD  &trans  &trans  &trans   &trans   &trans  &kp RIGHT_ALT  &trans
             >;
         };
     };
-
 };
