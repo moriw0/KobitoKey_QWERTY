@@ -81,7 +81,7 @@
             label = "MOUSE";
             bindings = <
 &trans  &trans  &trans  &trans  &trans  &trans  &mkp MB1  &mkp MB3  &mkp MB2  &trans
-&trans  &trans  &trans  &trans  &trans  &trans  &trans    &trans    &trans    &trans
+&trans  &trans  &trans  &mo 5   &trans  &trans  &trans    &trans    &trans    &trans
 &trans  &trans  &trans  &trans  &trans  &trans  &trans    &trans    &trans    &trans
 &trans  &trans  &trans  &trans  &to 0   &to 0   &trans    &trans    &trans    &trans
             >;
@@ -94,6 +94,15 @@
 &mt LEFT_CONTROL F1  &kp F2         &kp F3    &kp F4  &kp F5  &kp F6   &kp F7   &kp F8  &kp F9         &kp F10
 &trans               &trans         &trans    &trans  &trans  &kp F11  &kp F12  &trans  &trans         &kp RIGHT_SHIFT
 &trans               &kp RIGHT_ALT  &kp RCMD  &trans  &trans  &trans   &trans   &trans  &kp RIGHT_ALT  &trans
+            >;
+        };
+        layer5 {
+            label = "MOUSE_LOW_DPI";
+            bindings = <
+&trans  &trans  &trans  &trans  &trans  &trans  &mkp MB1  &mkp MB3  &mkp MB2  &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans    &trans    &trans    &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans    &trans    &trans    &trans
+&trans  &trans  &trans  &trans  &to 0   &to 0   &trans    &trans    &trans    &trans
             >;
         };
     };
