@@ -61,7 +61,7 @@
             label = "NUM&MOVE";
             bindings = <
 &kp NUMBER_1      &kp NUMBER_2  &kp NUMBER_3  &kp NUMBER_4  &kp NUMBER_5      &kp NUMBER_6  &kp NUMBER_7    &kp NUMBER_8  &kp NUMBER_9  &kp NUMBER_0
-&kp LEFT_CONTROL  &trans        &trans        &kp LA(LCMD)  &kp LA(LC(LCMD))  &kp LEFT      &kp DOWN_ARROW  &kp UP_ARROW  &kp RIGHT     &trans
+&kp LEFT_CONTROL  &trans        &trans        &kp LA(LCMD)  &kp LA(LC(LCMD))  &kp LEFT      &kp DOWN_ARROW  &kp UP_ARROW  &kp RIGHT     &kp COLON
 &kp LEFT_SHIFT    &trans        &trans        &trans        &trans            &kp HOME      &kp PAGE_DOWN   &kp PAGE_UP   &kp END       &trans
 &trans            &kp LALT      &kp LCMD      &kp LS(LCMD)  &kp LC(LS(LCMD))  &trans        &trans          &trans        &trans        &trans
             >;
