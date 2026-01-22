@@ -50,10 +50,10 @@
         default_layer {
             label = "Kobito";
             bindings = <
-&kp Q           &kp W     &kp E     &kp R                   &kp T        &kp Y        &kp U          &kp I            &kp O             &kp P
-&kp A           &kp S     &kp D     &kp F                   &kp G        &kp H        &kp J          &kp K            &kp L             &kp SEMICOLON
-&kp Z           &kp X     &kp C     &kp V                   &kp B        &kp N        &kp M          &kp COMMA        &kp DOT           &kp SLASH
-&kp LEFT_SHIFT  &kp LALT  &kp LCMD  &mt LEFT_CONTROL SPACE  &lt 2 MINUS  &lt 1 ENTER  &kp BACKSPACE  &kp RIGHT_SHIFT  &kp LEFT_BRACKET  &lt 4 RIGHT_BRACKET
+&kp Q           &kp W     &kp E     &kp R        &kp T                   &kp Y          &kp U          &kp I            &kp O             &kp P
+&kp A           &kp S     &kp D     &kp F        &kp G                   &kp H          &kp J          &kp K            &kp L             &kp SEMICOLON
+&kp Z           &kp X     &kp C     &kp V        &kp B                   &kp N          &kp M          &kp COMMA        &kp DOT           &kp SLASH
+&kp LEFT_SHIFT  &kp LALT  &kp LCMD  &lt 2 MINUS  &mt LEFT_CONTROL SPACE  &kp BACKSPACE  &lt 1 ENTER    &kp RIGHT_SHIFT  &kp LEFT_BRACKET  &lt 4 RIGHT_BRACKET
             >;
         };
 
@@ -73,17 +73,17 @@
 &kp EXCLAMATION  &kp AT    &kp POUND  &kp DOLLAR  &kp PERCENT  &kp CARET       &kp AMPERSAND  &kp ASTRK          &kp LEFT_PARENTHESIS  &kp RIGHT_PARENTHESIS
 &kp BACKSLASH    &kp PIPE  &kp PLUS   &kp GRAVE   &kp TILDE    &kp APOSTROPHE  &kp EQUAL      &kp DOUBLE_QUOTES  &kp LEFT_BRACE        &kp RIGHT_BRACE
 &trans           &trans    &trans     &trans      &trans       &trans          &kp RG(MINUS)  &kp RG(PLUS)       &trans                &trans
-&trans           &trans    &trans     &trans      &trans       &kp RG(SPACE)   &kp DELETE     &kp RCMD           &trans                &trans
+&trans           &trans    &trans     &trans      &kp RG(SPACE)&kp DELETE      &kp RCMD       &trans             &trans                &trans
             >;
         };
 
         layer3 {
             label = "MOUSE";
             bindings = <
-&trans  &trans  &trans  &trans  &trans  &trans  &mkp MB1  &mkp MB3  &mkp MB2  &kp RC(UP_ARROW)
-&trans  &trans  &trans  &mo 5   &trans  &trans  &trans    &trans    &trans    &trans
-&trans  &trans  &trans  &trans  &trans  &trans  &trans    &trans    &trans    &trans
-&trans  &trans  &trans  &trans  &to 0   &to 0   &trans    &trans    &trans    &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &mkp MB1  &mkp MB2  &trans  &kp RC(UP_ARROW)
+&trans  &trans  &trans  &mo 5   &trans  &trans  &trans    &trans    &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans    &trans    &trans  &trans
+&trans  &trans  &trans  &to 0   &to 0   &trans  &trans    &trans    &trans  &trans
             >;
         };
 
@@ -100,10 +100,10 @@
         layer5 {
             label = "MOUSE_LOW_DPI";
             bindings = <
-&trans  &trans  &trans  &trans  &trans  &trans  &mkp MB1  &mkp MB3  &mkp MB2  &trans
-&trans  &trans  &trans  &trans  &trans  &trans  &trans    &trans    &trans    &trans
-&trans  &trans  &trans  &trans  &trans  &trans  &trans    &trans    &trans    &trans
-&trans  &trans  &trans  &trans  &to 0   &to 0   &trans    &trans    &trans    &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &mkp MB1  &mkp MB2  &trans  &mkp MB3
+&trans  &trans  &trans  &trans  &trans  &trans  &trans    &trans    &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans    &trans    &trans  &trans
+&trans  &trans  &trans  &to 0   &to 0   &trans  &trans    &trans    &trans  &trans
             >;
         };
     };
