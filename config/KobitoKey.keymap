@@ -45,6 +45,11 @@
             key-positions = <33 36>;
             timeout-ms = <50>;
         };
+
+        combo_aqua {
+            bindings = <&kp LS(LA(LC(LEFT_GUI)))>;
+            key-positions = <15 16>;
+        };
     };
 
     macros {
