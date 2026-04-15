@@ -47,7 +47,7 @@
         };
 
         combo_aqua {
-            bindings = <&kp LS(LA(LC(LG(V))))>;
+            bindings = <&kp LS(LA(LC(LEFT_GUI)))>;
             key-positions = <25 26>;
         };
 
