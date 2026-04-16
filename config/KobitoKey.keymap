@@ -55,6 +55,11 @@
             bindings = <&kp RS(RA(RC(RIGHT_GUI)))>;
             key-positions = <15 16>;
         };
+
+        combo_comctl {
+            bindings = <&kp RC(RIGHT_GUI)>;
+            key-positions = <5 6>;
+        };
     };
 
     macros {
