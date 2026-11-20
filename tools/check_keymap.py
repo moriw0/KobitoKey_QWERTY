@@ -7,10 +7,11 @@
 重なりとは、2 つのコンボの key-positions が同じ集合、または一方がもう一方を含むこと
 （含むと、押している途中で小さい方が先に出てしまう）。
 """
+import os
 import re
 import sys
 
-DEFAULT = "config/KobitoKey.keymap"
+DEFAULT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "config", "KobitoKey.keymap")
 
 
 def parse(text):
