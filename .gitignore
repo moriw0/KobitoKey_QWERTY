@@ -93,3 +93,6 @@ zephyr/
 zmk/
 modules/
 prospector-zmk-module/
+
+# プロジェクトのスキルは共有する（グローバルの ignore を上書き）
+!.claude/skills/
