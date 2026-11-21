@@ -60,6 +60,13 @@
             bindings = <&kp RC(RIGHT_GUI)>;
             key-positions = <5 6>;
         };
+
+        combo_comctl_left {
+            timeout-ms = <50>;
+            key-positions = <20 21>;
+            layers = <0 3>;
+            bindings = <&kp RC(RIGHT_GUI)>;
+        };
     };
 
     macros {
